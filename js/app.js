@@ -74,7 +74,7 @@ class Receta {
                 );
             })
 
-            this.setEjemplo();
+            // this.setEjemplo();
 
             document.querySelector("#btnImprimirReceta").addEventListener("click", () => {
                 if (document.querySelector("#nombre").value == "") return;
