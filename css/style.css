@@ -1,14 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body{
+    margin-top:55px;
+}
+
+
+
 .btn-azul{
     color:#FFFFFF;
-    background: #10286d;
+    background: #5A6996;
 }
+
 .btn-azul:hover{
     color:#FFFFFF;
-    background: #10286d;
+    background: #5A6996;
 }
+
 header img{
     width: 100%;
 }
 footer img{
     width:100%;
+}
+
+textarea{
+    resize:none;
 }
