@@ -93,8 +93,12 @@ class Receta {
         fontsizenormal = 12,
         fontsizesmall = 8,
         ptsPerInch = 28.34,
+<<<<<<< HEAD
         lineheight = 1,
         valNombre = document.querySelector("#nombre").value;
+=======
+        lineheight = 1;
+>>>>>>> 286257146e88f3ea86e26d5d1bc13ec61ba7ddc9
 
         let doc = new jsPDF({
             orientation: "portrait",
@@ -108,13 +112,18 @@ class Receta {
             var dataURI = new Receta().getBase64Image(imgEncabezado);
             return dataURI;
            }
+<<<<<<< HEAD
         imgEncabezado.src = "../img/EncabezadoNuevoReceta.jpg";
+=======
+        imgEncabezado.src = "../img/EncabezadoReceta.jpg";
+>>>>>>> 286257146e88f3ea86e26d5d1bc13ec61ba7ddc9
 
         var imgPie = new Image()
         imgPie.onload = function(){
             var dataURI = new Receta().getBase64Image(imgPie);
             return dataURI;
            }
+<<<<<<< HEAD
         imgPie.src = "../img/PieDePaginaNuevoReceta.jpg";
 
         doc.addImage(imgEncabezado.onload(), 'JPEG', 1, .9, 12.2, 1.5)
@@ -157,6 +166,46 @@ class Receta {
                 this.fila += .3;
             }
         }
+=======
+        imgPie.src = "../img/PieDePaginaReceta-02.jpg";
+
+        doc.addImage(imgEncabezado.onload(), 'JPEG', 1, .9, 12.2, 1.5)
+        this.fila += 1;
+        doc.setFontSize(fontsizenormal);
+        if(this.imprimeInformacion(margen,"nombre","Nombre:",doc)){
+            this.fila +=.5;
+        }
+        doc.setFontSize(fontsizesmall);
+        if (this.imprimeInformacion(margen,"edad","Edad:",doc)){
+            this.fila +=.3;
+        }
+        if(this.imprimeInformacion(margen,"ta","T.A:",doc)){
+            this.fila +=.3;
+        }
+        if(this.imprimeInformacion(margen,"fc","F.C:",doc)){
+            this.fila +=.3;
+        }
+        if(this.imprimeInformacion(margen,"temp","Temp:",doc)){
+            this.fila +=.3;
+        }
+        if(this.imprimeInformacion(margen,"peso","Peso:",doc)){
+            this.fila +=.3;
+        }
+        if(this.imprimeInformacion(margen,"talla","Talla:",doc)){
+            this.fila +=.3;
+        }
+        if(this.imprimeInformacion(margen,"imc","IMC:",doc)){
+            this.fila +=.3;
+        }
+        this.fila += .6;
+        doc.setFontSize(fontsizenormal);
+        if(this.imprimeInformacion(margen,"dx","DX:",doc,true,maxLineWidth)){
+            this.fila += .3;
+        }
+        if(this.imprimeInformacion(margen,"rp","RP:",doc,true,maxLineWidth)){
+            this.fila += .3;
+        }
+>>>>>>> 286257146e88f3ea86e26d5d1bc13ec61ba7ddc9
 
         doc.addImage(imgPie.onload(), 'JPEG', 1, 18, 12.2, 2.6)
         doc.save("Receta.pdf");
