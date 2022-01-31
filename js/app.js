@@ -1,9 +1,10 @@
-class Receta {
+import {fecha_amd} from './funcionesfecha.js'
+class Receta { 
 
     constructor(reset = false) {
         this.fila = 2.5
         
-        this.imprimeInformacion = (margen,id,etiqueta="",doc,esTextArea=false,maxLineWidth=0) => {
+        this.imprimeInformacion = (margen,id,etiqueta="",doc,esTextArea=false,maxLineWidth=0,esfecha=false) => {
             const el = document.querySelector(`#${id}`);
             if (el.value==""){
                 return false;
@@ -19,7 +20,11 @@ class Receta {
                 } else {
                     doc.text(margen,this.fila,etiqueta);
                     doc.setFontType('bold');
-                    doc.text(3.3,this.fila,el.value);
+                    if(esfecha){
+                        doc.text(3.3,this.fila,fecha_amd(el.value));
+                    } else {
+                        doc.text(3.3,this.fila,el.value);
+                    }
                     doc.setFontType('default');
                 }
                 return true;
@@ -123,6 +128,9 @@ class Receta {
         if (valNombre!="."){
 
             doc.setFontSize(fontsizenormal);
+            if(this.imprimeInformacion(margen,"fecha","Fecha:",doc,false,0,true)){
+                this.fila +=.5;
+            }
             if(this.imprimeInformacion(margen,"nombre","Nombre:",doc)){
                 this.fila +=.5;
             }
