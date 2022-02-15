@@ -4,14 +4,6 @@ class Doctor {
     constructor(reset = false) {
         this.fila = 2.5
 
-        
-        // $("#txtTextoCertificado").summernote({
-        //     tabsize: 2,
-        //     toolbar: [
-        //         ['font', ['bold', 'underline', 'italic', 'clear']],
-        //       ]
-        // });
-
         this.imprimeInformacion = (margen,id,etiqueta="",doc,esTextArea=false,maxLineWidth=0,esfecha=false) => {
             const el = document.querySelector(`#${id}`);
             if (el.value==""){
