@@ -1,9 +1,17 @@
 import {fecha_amd} from './funcionesfecha.js'
-class Receta { 
+class Doctor { 
 
     constructor(reset = false) {
         this.fila = 2.5
+
         
+        // $("#txtTextoCertificado").summernote({
+        //     tabsize: 2,
+        //     toolbar: [
+        //         ['font', ['bold', 'underline', 'italic', 'clear']],
+        //       ]
+        // });
+
         this.imprimeInformacion = (margen,id,etiqueta="",doc,esTextArea=false,maxLineWidth=0,esfecha=false) => {
             const el = document.querySelector(`#${id}`);
             if (el.value==""){
@@ -83,9 +91,13 @@ class Receta {
 
             document.querySelector("#btnImprimirReceta").addEventListener("click", () => {
                 if (document.querySelector("#nombre").value == "") return;
-                new Receta().fnCreaRecetaPdf();
+                new Doctor().fnCreaRecetaPdf();
             })
 
+            document.querySelector("#btnImprimirCertificado").addEventListener("click", () => {
+                if (document.querySelector("#txtTextoCertificado").value == "") return;
+                new Doctor().fnCreaCertificadoPdf();
+            })
 
         }
     }
@@ -110,19 +122,19 @@ class Receta {
 
         var imgEncabezado = new Image();
         imgEncabezado.onload = function(){
-            var dataURI = new Receta().getBase64Image(imgEncabezado);
+            var dataURI = new Doctor().getBase64Image(imgEncabezado);
             return dataURI;
            }
         imgEncabezado.src = "../img/EncabezadoNuevoReceta.jpg";
 
         var imgPie = new Image()
         imgPie.onload = function(){
-            var dataURI = new Receta().getBase64Image(imgPie);
+            var dataURI = new Doctor().getBase64Image(imgPie);
             return dataURI;
            }
         imgPie.src = "../img/PieDePaginaNuevoReceta.jpg";
 
-        doc.addImage(imgEncabezado.onload(), 'JPEG', 1, .9, 12.2, 1.5)
+        doc.addImage(imgEncabezado.onload(), 'JPEG', .63, .66, 12.7, 1.93)
         this.fila += 1;
 
         if (valNombre!="."){
@@ -166,11 +178,64 @@ class Receta {
             }
         }
 
-        doc.addImage(imgPie.onload(), 'JPEG', 1, 18, 12.2, 2.6)
+        doc.addImage(imgPie.onload(), 'JPEG', .63, 18.55, 12.7, 2.59)
         doc.save("Receta.pdf");
     }
 
+    fnCreaCertificadoPdf() {
+        let 
+        pageWidth = 19.0,
+        margen = 1.5,
+        maxLineWidth = pageWidth,
+        fontsizenormal = 12,
+        fontsizesmall = 8,
+        ptsPerInch = 28.34,
+        lineheight = 1,
+        valNombre = document.querySelector("#nombreCertificado").value;
 
+        let doc = new jsPDF({
+            orientation: "portrait",
+            unit: "cm",
+            format: [27.9,21.6],
+            lineHeight: lineheight
+        });
+
+        var imgEncabezado = new Image();
+        imgEncabezado.onload = function(){
+            var dataURI = new Doctor().getBase64Image(imgEncabezado);
+            return dataURI;
+           }
+        imgEncabezado.src = "../img/EncabezadoNuevoReceta.jpg";
+
+        var imgPie = new Image()
+        imgPie.onload = function(){
+            var dataURI = new Doctor().getBase64Image(imgPie);
+            return dataURI;
+           }
+        imgPie.src = "../img/PieDePaginaNuevoReceta.jpg";
+
+        doc.addImage(imgEncabezado.onload(), 'JPEG', .79, .63, 20, 3.05)
+        this.fila += 2;
+
+        if (valNombre!="."){
+
+            doc.setFontSize(fontsizenormal);
+            if(this.imprimeInformacion(margen,"fechaCertificado","Fecha:",doc,false,0,true)){
+                this.fila +=.5;
+            }
+            if(this.imprimeInformacion(margen,"nombreCertificado","Nombre:",doc)){
+                this.fila +=.5;
+            }
+            doc.setFontSize(fontsizenormal);
+            if (this.imprimeInformacion(margen,"txtTextoCertificado","",doc,true,maxLineWidth)){
+                this.fila +=.8;
+            }
+
+        }
+
+        doc.addImage(imgPie.onload(), 'JPEG', .79, 22.71, 20, 4.09)
+        doc.save("Certificado.pdf");
+    }
 
     getBase64Image = (img) => {
         var canvas = document.createElement("canvas");
@@ -185,6 +250,5 @@ class Receta {
     
         return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
     }
-
 }
-window.onload = () => new Receta(true)
+window.onload = () => new Doctor(true)
